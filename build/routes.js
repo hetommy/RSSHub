@@ -12479,6 +12479,42 @@ export default {
     "description": "",
     "lang": "en"
   },
+  "azurlane": {
+    "routes": {
+      "/news/:server/:type?": {
+        "path": "/news/:server/:type?",
+        "name": "News",
+        "categories": [
+          "game"
+        ],
+        "maintainers": [
+          "AnitsuriW"
+        ],
+        "example": "/azurlane/news/jp/0",
+        "parameters": {
+          "server": "game server (ISO 3166 two-letter country code, case-insensitive), only `JP` is supported for now",
+          "type": "news type, see the table below, `0` by default"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "description": "| すべて | お知らせ | イベント | メインテナンス | 重要 |\n| :--: | :--: | :--: | :--: | :--: |\n| 0 | 1 | 2 | 3 | 4 |",
+        "location": "news.ts",
+        "module": () => import('@/routes/azurlane/news.ts')
+      }
+    },
+    "name": "Azur Lane",
+    "url": "azurlane.jp",
+    "categories": [
+      "game"
+    ],
+    "lang": "ja"
+  },
   "baai": {
     "routes": {
       "/hub/events": {
@@ -32684,6 +32720,101 @@ export default {
     "name": "东莞教研网",
     "apiRoutes": {},
     "url": "dgjyw.com",
+    "lang": "zh-CN"
+  },
+  "dgtle": {
+    "routes": {
+      "/news/:id?": {
+        "path": "/news/:id?",
+        "name": "鲸闻",
+        "url": "www.dgtle.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/dgtle/news/0",
+        "parameters": {
+          "category": {
+            "description": "分类，默认为 `0`，即最新，可在下表中找到",
+            "options": [
+              {
+                "label": "最新",
+                "value": "0"
+              },
+              {
+                "label": "直播",
+                "value": "395"
+              },
+              {
+                "label": "资讯",
+                "value": "396"
+              },
+              {
+                "label": "每日一言",
+                "value": "388"
+              }
+            ]
+          }
+        },
+        "description": ":::tip\n订阅 [最新](https://www.dgtle.com/news)，其对应分类 ID 为 `0`，此时路由为 [`/dgtle/news/0`](https://rsshub.app/dgtle/news/0)。\n:::\n\n| 最新 | 直播 | 资讯 | 每日一言 |\n| ---- | ---- | ---- | -------- |\n| 0    | 395  | 396  | 388      |\n",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.dgtle.com/news"
+            ],
+            "target": "/news"
+          },
+          {
+            "title": "最新",
+            "source": [
+              "www.dgtle.com/news"
+            ],
+            "target": "/news/0"
+          },
+          {
+            "title": "直播",
+            "source": [
+              "www.dgtle.com/news"
+            ],
+            "target": "/news/395"
+          },
+          {
+            "title": "资讯",
+            "source": [
+              "www.dgtle.com/news"
+            ],
+            "target": "/news/396"
+          },
+          {
+            "title": "每日一言",
+            "source": [
+              "www.dgtle.com/news"
+            ],
+            "target": "/news/388"
+          }
+        ],
+        "view": 0,
+        "location": "news.ts",
+        "module": () => import('@/routes/dgtle/news.ts')
+      }
+    },
+    "name": "数字尾巴",
+    "url": "dgtle.com",
+    "categories": [
+      "new-media"
+    ],
+    "description": "",
     "lang": "zh-CN"
   },
   "dgut": {
