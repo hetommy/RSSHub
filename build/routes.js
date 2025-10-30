@@ -7179,6 +7179,30 @@ export default {
     "url": "news.ahjzu.edu.cn",
     "lang": "zh-CN"
   },
+  "aiaa": {
+    "routes": {
+      "/journal/:journalID": {
+        "name": "ASR Articles",
+        "maintainers": [
+          "HappyZhu99"
+        ],
+        "categories": [
+          "journal"
+        ],
+        "path": "/journal/:journalID",
+        "parameters": {
+          "journalID": "journal ID, can be found in the URL"
+        },
+        "example": "/aiaa/journal/aiaaj",
+        "location": "journal.ts",
+        "module": () => import('@/routes/aiaa/journal.ts')
+      }
+    },
+    "name": "AIAA Aerospace Research Central",
+    "apiRoutes": {},
+    "url": "arc.aiaa.org",
+    "lang": "en"
+  },
   "aibase": {
     "routes": {
       "/daily": {
@@ -35772,8 +35796,7 @@ export default {
       "/:type?/:category?": {
         "path": "/:type?/:category?",
         "categories": [
-          "new-media",
-          "popular"
+          "new-media"
         ],
         "example": "/dx2025",
         "parameters": {
@@ -63615,7 +63638,8 @@ export default {
       "/topic/text/:id": {
         "path": "/topic/text/:id",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/jike/topic/text/553870e8e4b0cafb0a1bef68",
         "parameters": {
