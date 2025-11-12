@@ -9026,8 +9026,7 @@
       "/information/:type?": {
         "path": "/information/:type?",
         "categories": [
-          "new-media",
-          "popular"
+          "new-media"
         ],
         "example": "/aliresearch/information",
         "parameters": {
@@ -42760,41 +42759,174 @@
   },
   "futunn": {
     "routes": {
-      "/highlights": {
-        "path": [
-          "/highlights",
-          "/main",
-          "/"
+      "/live/:lang?": {
+        "path": "/live/:lang?",
+        "categories": [
+          "finance"
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "news.futunn.com/main",
-        "location": "main.ts",
-        "module": "() => import('@/routes/futunn/main.ts')"
+        "example": "/futunn/live",
+        "parameters": {
+          "category": {
+            "description": "通知语言",
+            "default": "Mandarin",
+            "options": [
+              {
+                "label": "国语",
+                "value": "Mandarin"
+              },
+              {
+                "label": "粵語",
+                "value": "Cantonese"
+              },
+              {
+                "label": "English",
+                "value": "English"
+              }
+            ]
+          }
+        },
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "news.futunn.com/main/live"
+            ],
+            "target": "/live"
+          },
+          {
+            "source": [
+              "news.futunn.com/hk/main/live"
+            ],
+            "target": "/live/Cantonese"
+          },
+          {
+            "source": [
+              "news.futunn.com/en/main/live"
+            ],
+            "target": "/live/English"
+          }
+        ],
+        "name": "快讯",
+        "maintainers": [
+          "kennyfong19931"
+        ],
+        "location": "live.ts",
+        "module": "() => import('@/routes/futunn/live.ts')"
       },
       "/main": {
         "path": [
-          "/highlights",
           "/main",
           "/"
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "news.futunn.com/main",
+        "categories": [
+          "finance"
+        ],
+        "example": "/futunn/main",
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "news.futunn.com/main",
+              "news.futunn.com/:lang/main"
+            ],
+            "target": "/main"
+          }
+        ],
+        "name": "要闻",
+        "maintainers": [
+          "Wsine",
+          "nczitzk",
+          "kennyfong19931"
+        ],
         "location": "main.ts",
         "module": "() => import('@/routes/futunn/main.ts')"
       },
       "/": {
         "path": [
-          "/highlights",
           "/main",
           "/"
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "news.futunn.com/main",
+        "categories": [
+          "finance"
+        ],
+        "example": "/futunn/main",
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "news.futunn.com/main",
+              "news.futunn.com/:lang/main"
+            ],
+            "target": "/main"
+          }
+        ],
+        "name": "要闻",
+        "maintainers": [
+          "Wsine",
+          "nczitzk",
+          "kennyfong19931"
+        ],
         "location": "main.ts",
         "module": "() => import('@/routes/futunn/main.ts')"
+      },
+      "/topic/:id": {
+        "path": "/topic/:id",
+        "categories": [
+          "finance"
+        ],
+        "example": "/futunn/topic/1267",
+        "parameters": {
+          "id": "Topic ID, can be found in URL"
+        },
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "news.futunn.com/news-topics/:id/*",
+              "news.futunn.com/:lang/news-topics/:id/*"
+            ],
+            "target": "/topic/:id"
+          }
+        ],
+        "name": "专题",
+        "maintainers": [
+          "kennyfong19931"
+        ],
+        "location": "topic.ts",
+        "module": "() => import('@/routes/futunn/topic.ts')"
+      },
+      "/video": {
+        "path": "/video",
+        "categories": [
+          "finance"
+        ],
+        "example": "/futunn/video",
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "news.futunn.com/main/video-list",
+              "news.futunn.com/:lang/main/video-list"
+            ],
+            "target": "/video"
+          }
+        ],
+        "name": "视频",
+        "maintainers": [
+          "kennyfong19931"
+        ],
+        "location": "video.ts",
+        "module": "() => import('@/routes/futunn/video.ts')"
       }
     },
     "name": "Futubull 富途牛牛",
@@ -62062,20 +62194,167 @@
   },
   "iresearch": {
     "routes": {
-      "/chart/:category?": {
-        "path": "/chart/:category?",
-        "name": "研究图表",
+      "/report/:type?/:id?": {
+        "path": "/report/:type?/:id?",
+        "name": "研究报告",
         "url": "www.iresearch.com.cn",
         "maintainers": [
+          "brilon",
+          "Fatpandac",
           "nczitzk"
         ],
-        "example": "/iresearch/chart",
+        "example": "/iresearch/report",
         "parameters": {
-          "category": "分类，见下表"
+          "type": {
+            "description": "分类，默认为 `1`，即最新报告，可在对应分类页 URL 中找到",
+            "options": [
+              {
+                "label": "最新报告",
+                "value": "1"
+              },
+              {
+                "label": "热门报告",
+                "value": "2"
+              },
+              {
+                "label": "周度市场观察",
+                "value": "3"
+              },
+              {
+                "label": "研究图表",
+                "value": "4"
+              }
+            ]
+          },
+          "id": {
+            "description": "行业 ID，默认为全部，即全部行业，可在对应行业页 URL 中找到",
+            "options": [
+              {
+                "label": "全部",
+                "value": ""
+              },
+              {
+                "label": "家电行业",
+                "value": "1"
+              },
+              {
+                "label": "服装行业",
+                "value": "2"
+              },
+              {
+                "label": "美妆行业",
+                "value": "3"
+              },
+              {
+                "label": "食品饮料行业",
+                "value": "4"
+              },
+              {
+                "label": "酒行业",
+                "value": "5"
+              },
+              {
+                "label": "媒体文娱",
+                "value": "59"
+              },
+              {
+                "label": "广告营销",
+                "value": "89"
+              },
+              {
+                "label": "游戏行业",
+                "value": "90"
+              },
+              {
+                "label": "视频媒体",
+                "value": "91"
+              },
+              {
+                "label": "消费电商",
+                "value": "69"
+              },
+              {
+                "label": "电子商务",
+                "value": "86"
+              },
+              {
+                "label": "消费者洞察",
+                "value": "87"
+              },
+              {
+                "label": "旅游行业",
+                "value": "88"
+              },
+              {
+                "label": "汽车行业",
+                "value": "80"
+              },
+              {
+                "label": "教育行业",
+                "value": "63"
+              },
+              {
+                "label": "企业服务",
+                "value": "60"
+              },
+              {
+                "label": "网络服务",
+                "value": "84"
+              },
+              {
+                "label": "应用服务",
+                "value": "85"
+              },
+              {
+                "label": "AI大数据",
+                "value": "65"
+              },
+              {
+                "label": "人工智能",
+                "value": "83"
+              },
+              {
+                "label": "物流行业",
+                "value": "75"
+              },
+              {
+                "label": "金融行业",
+                "value": "70"
+              },
+              {
+                "label": "支付行业",
+                "value": "82"
+              },
+              {
+                "label": "房产行业",
+                "value": "68"
+              },
+              {
+                "label": "医疗健康",
+                "value": "62"
+              },
+              {
+                "label": "先进制造",
+                "value": "61"
+              },
+              {
+                "label": "能源环保",
+                "value": "77"
+              },
+              {
+                "label": "区块链",
+                "value": "76"
+              },
+              {
+                "label": "其他",
+                "value": "81"
+              }
+            ]
+          }
         },
-        "description": "\n| 媒体文娱 | 广告营销   | 游戏行业 | 视频媒体  | 消费电商 |\n| -------- | ---------- | -------- | --------- | -------- |\n| 电子商务 | 消费者洞察 | 旅游行业 | 汽车行业  | 教育行业 |\n| 企业服务 | 网络服务   | 应用服务 | AI 大数据 | 人工智能 |\n| 物流行业 | 金融行业   | 支付行业 | 房产行业  | 医疗健康 |\n| 先进制造 | 新能源     | 区块链   | 其他      |          |\n",
+        "description": ":::tip\n订阅 [电子商务最新报告](https://www.iresearch.com.cn/report.shtml?type=1&classId=86)，其源网址为 `https://www.iresearch.com.cn/report.shtml?type=1&classId=86`，请参考该 URL 指定部分构成参数，此时路由为 [`/iresearch/report/最新报告/电子商务`](https://rsshub.app/iresearch/report/最新报告/电子商务) 或 [`/iresearch/report/1/86`](https://rsshub.app/iresearch/report/1/86)。\n:::\n\n#### 分类\n\n| [最新报告](https://www.iresearch.com.cn/report.shtml?type=1) | [研究图表](https://www.iresearch.com.cn/report.shtml?type=4) | [周度市场观察](https://www.iresearch.com.cn/report.shtml?type=3) | [热门报告](https://www.iresearch.com.cn/report.shtml?type=2) |\n| ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------------------------------------------- | ------------------------------------------------------------ |\n| [1](https://rsshub.app/iresearch/report/1)                   | [4](https://rsshub.app/iresearch/report/4)                   | [3](https://rsshub.app/iresearch/report/3)                       | [2](https://rsshub.app/iresearch/report/2)                   |\n\n<details>\n  <summary>更多行业</summary>\n\n| 名称                                                                       | ID                                             |\n| -------------------------------------------------------------------------- | ---------------------------------------------- |\n| [家电行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=1)     | [1](https://rsshub.app/iresearch/report/3/1)   |\n| [服装行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=2)     | [2](https://rsshub.app/iresearch/report/3/2)   |\n| [美妆行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=3)     | [3](https://rsshub.app/iresearch/report/3/3)   |\n| [食品饮料行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=4) | [4](https://rsshub.app/iresearch/report/3/4)   |\n| [酒行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=5)       | [5](https://rsshub.app/iresearch/report/3/5)   |\n| [媒体文娱](https://www.iresearch.com.cn/report.shtml?classId=59)           | [59](https://rsshub.app/iresearch/report/1/59) |\n| [广告营销](https://www.iresearch.com.cn/report.shtml?classId=89)           | [89](https://rsshub.app/iresearch/report/1/89) |\n| [游戏行业](https://www.iresearch.com.cn/report.shtml?classId=90)           | [90](https://rsshub.app/iresearch/report/1/90) |\n| [视频媒体](https://www.iresearch.com.cn/report.shtml?classId=91)           | [91](https://rsshub.app/iresearch/report/1/91) |\n| [消费电商](https://www.iresearch.com.cn/report.shtml?classId=69)           | [69](https://rsshub.app/iresearch/report/1/69) |\n| [电子商务](https://www.iresearch.com.cn/report.shtml?classId=86)           | [86](https://rsshub.app/iresearch/report/1/86) |\n| [消费者洞察](https://www.iresearch.com.cn/report.shtml?classId=87)         | [87](https://rsshub.app/iresearch/report/1/87) |\n| [旅游行业](https://www.iresearch.com.cn/report.shtml?classId=88)           | [88](https://rsshub.app/iresearch/report/1/88) |\n| [汽车行业](https://www.iresearch.com.cn/report.shtml?classId=80)           | [80](https://rsshub.app/iresearch/report/1/80) |\n| [教育行业](https://www.iresearch.com.cn/report.shtml?classId=63)           | [63](https://rsshub.app/iresearch/report/1/63) |\n| [企业服务](https://www.iresearch.com.cn/report.shtml?classId=60)           | [60](https://rsshub.app/iresearch/report/1/60) |\n| [网络服务](https://www.iresearch.com.cn/report.shtml?classId=84)           | [84](https://rsshub.app/iresearch/report/1/84) |\n| [应用服务](https://www.iresearch.com.cn/report.shtml?classId=85)           | [85](https://rsshub.app/iresearch/report/1/85) |\n| [AI 大数据](https://www.iresearch.com.cn/report.shtml?classId=65)          | [65](https://rsshub.app/iresearch/report/1/65) |\n| [人工智能](https://www.iresearch.com.cn/report.shtml?classId=83)           | [83](https://rsshub.app/iresearch/report/1/83) |\n| [物流行业](https://www.iresearch.com.cn/report.shtml?classId=75)           | [75](https://rsshub.app/iresearch/report/1/75) |\n| [金融行业](https://www.iresearch.com.cn/report.shtml?classId=70)           | [70](https://rsshub.app/iresearch/report/1/70) |\n| [支付行业](https://www.iresearch.com.cn/report.shtml?classId=82)           | [82](https://rsshub.app/iresearch/report/1/82) |\n| [房产行业](https://www.iresearch.com.cn/report.shtml?classId=68)           | [68](https://rsshub.app/iresearch/report/1/68) |\n| [医疗健康](https://www.iresearch.com.cn/report.shtml?classId=62)           | [62](https://rsshub.app/iresearch/report/1/62) |\n| [先进制造](https://www.iresearch.com.cn/report.shtml?classId=61)           | [61](https://rsshub.app/iresearch/report/1/61) |\n| [能源环保](https://www.iresearch.com.cn/report.shtml?classId=77)           | [77](https://rsshub.app/iresearch/report/1/77) |\n| [区块链](https://www.iresearch.com.cn/report.shtml?classId=76)             | [76](https://rsshub.app/iresearch/report/1/76) |\n| [其他](https://www.iresearch.com.cn/report.shtml?classId=81)               | [81](https://rsshub.app/iresearch/report/1/81) |\n\n</details>\n",
         "categories": [
-          "new-media"
+          "other"
         ],
         "features": {
           "requireConfig": false,
@@ -62088,165 +62367,290 @@
         },
         "radar": [
           {
-            "title": "研究图表 - 媒体文娱",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
+              "www.iresearch.com.cn/report.shtml"
             ]
           },
           {
-            "title": "研究图表 - 广告营销",
+            "title": "最新报告",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
+              "www.iresearch.com.cn/report.shtml"
             ]
           },
           {
-            "title": "研究图表 - 游戏行业",
+            "title": "研究图表",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
+              "www.iresearch.com.cn/report.shtml"
             ]
           },
           {
-            "title": "研究图表 - 视频媒体",
+            "title": "周度市场观察",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
+              "www.iresearch.com.cn/report.shtml"
             ]
           },
           {
-            "title": "研究图表 - 消费电商",
+            "title": "热门报告",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
+              "www.iresearch.com.cn/report.shtml"
             ]
           },
           {
-            "title": "研究图表 - 电子商务",
+            "title": "周度市场观察 - 家电行业",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/3/1"
           },
           {
-            "title": "研究图表 - 消费者洞察",
+            "title": "周度市场观察 - 服装行业",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/3/2"
           },
           {
-            "title": "研究图表 - 旅游行业",
+            "title": "周度市场观察 - 美妆行业",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/3/3"
           },
           {
-            "title": "研究图表 - 汽车行业",
+            "title": "周度市场观察 - 食品饮料行业",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/3/4"
           },
           {
-            "title": "研究图表 - 教育行业",
+            "title": "周度市场观察 - 酒行业",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/3/5"
           },
           {
-            "title": "研究图表 - 企业服务",
+            "title": "最新报告 - 媒体文娱",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/59"
           },
           {
-            "title": "研究图表 - 网络服务",
+            "title": "最新报告 - 广告营销",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/89"
           },
           {
-            "title": "研究图表 - 应用服务",
+            "title": "最新报告 - 游戏行业",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/90"
           },
           {
-            "title": "研究图表 - AI大数据",
+            "title": "最新报告 - 视频媒体",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/91"
           },
           {
-            "title": "研究图表 - 人工智能",
+            "title": "最新报告 - 消费电商",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/69"
           },
           {
-            "title": "研究图表 - 物流行业",
+            "title": "最新报告 - 电子商务",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/86"
           },
           {
-            "title": "研究图表 - 金融行业",
+            "title": "最新报告 - 消费者洞察",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/87"
           },
           {
-            "title": "研究图表 - 支付行业",
+            "title": "最新报告 - 旅游行业",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/88"
           },
           {
-            "title": "研究图表 - 房产行业",
+            "title": "最新报告 - 汽车行业",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/80"
           },
           {
-            "title": "研究图表 - 医疗健康",
+            "title": "最新报告 - 教育行业",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/63"
           },
           {
-            "title": "研究图表 - 先进制造",
+            "title": "最新报告 - 企业服务",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/60"
           },
           {
-            "title": "研究图表 - 新能源",
+            "title": "最新报告 - 网络服务",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/84"
           },
           {
-            "title": "研究图表 - 区块链",
+            "title": "最新报告 - 应用服务",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/85"
           },
           {
-            "title": "研究图表 - 其他",
+            "title": "最新报告 - AI 大数据",
             "source": [
-              "https://www.iresearch.com.cn/report.shtml"
-            ]
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/65"
+          },
+          {
+            "title": "最新报告 - 人工智能",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/83"
+          },
+          {
+            "title": "最新报告 - 物流行业",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/75"
+          },
+          {
+            "title": "最新报告 - 金融行业",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/70"
+          },
+          {
+            "title": "最新报告 - 支付行业",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/82"
+          },
+          {
+            "title": "最新报告 - 房产行业",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/68"
+          },
+          {
+            "title": "最新报告 - 医疗健康",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/62"
+          },
+          {
+            "title": "最新报告 - 先进制造",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/61"
+          },
+          {
+            "title": "最新报告 - 能源环保",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/77"
+          },
+          {
+            "title": "最新报告 - 区块链",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/76"
+          },
+          {
+            "title": "最新报告 - 其他",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/report/1/81"
           }
         ],
         "view": 0,
-        "location": "chart.ts",
-        "module": "() => import('@/routes/iresearch/chart.ts')"
+        "location": "report.ts",
+        "module": "() => import('@/routes/iresearch/report.ts')"
       },
-      "/report": {
-        "path": "/report",
+      "/weekly/:id?": {
+        "path": "/weekly/:id?",
+        "name": "周度市场观察",
+        "url": "www.iresearch.com.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/iresearch/weekly",
+        "parameters": {
+          "id": {
+            "description": "行业 ID，默认为全部，即全部行业，可在对应行业页 URL 中找到",
+            "options": [
+              {
+                "label": "全部",
+                "value": ""
+              },
+              {
+                "label": "家电行业",
+                "value": "1"
+              },
+              {
+                "label": "服装行业",
+                "value": "2"
+              },
+              {
+                "label": "美妆行业",
+                "value": "3"
+              },
+              {
+                "label": "食品饮料行业",
+                "value": "4"
+              },
+              {
+                "label": "酒行业",
+                "value": "5"
+              }
+            ]
+          }
+        },
+        "description": ":::tip\n订阅 [家电行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=1)，其源网址为 `https://www.iresearch.com.cn/report.shtml?type=3&classId=1`，请参考该 URL 指定部分构成参数，此时路由为 [`/iresearch/weekly/家电行业`](https://rsshub.app/iresearch/weekly/家电行业) 或 [`/iresearch/weekly/1`](https://rsshub.app/iresearch/weekly/1)。\n:::\n\n| 名称                                                                       | ID                                           |\n| -------------------------------------------------------------------------- | -------------------------------------------- |\n| [家电行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=1)     | [1](https://rsshub.app/iresearch/report/3/1) |\n| [服装行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=2)     | [2](https://rsshub.app/iresearch/report/3/2) |\n| [美妆行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=3)     | [3](https://rsshub.app/iresearch/report/3/3) |\n| [食品饮料行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=4) | [4](https://rsshub.app/iresearch/report/3/4) |\n| [酒行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=5)       | [5](https://rsshub.app/iresearch/report/3/5) |\n",
         "categories": [
           "other"
         ],
-        "example": "/iresearch/report",
-        "parameters": {},
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
+          "supportRadar": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -62256,46 +62660,54 @@
             "source": [
               "www.iresearch.com.cn/report.shtml"
             ]
+          },
+          {
+            "title": "家电行业",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/weekly/1"
+          },
+          {
+            "title": "服装行业",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/weekly/2"
+          },
+          {
+            "title": "美妆行业",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/weekly/3"
+          },
+          {
+            "title": "食品饮料行业",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/weekly/4"
+          },
+          {
+            "title": "酒行业",
+            "source": [
+              "www.iresearch.com.cn/report.shtml"
+            ],
+            "target": "/weekly/5"
           }
         ],
-        "name": "产业研究报告",
-        "maintainers": [
-          "brilon",
-          "Fatpandac"
-        ],
-        "url": "www.iresearch.com.cn/report.shtml",
-        "location": "report.ts",
-        "module": "() => import('@/routes/iresearch/report.ts')"
-      },
-      "/weekly/:category?": {
-        "path": "/weekly/:category?",
-        "categories": [
-          "other"
-        ],
-        "example": "/iresearch/weekly",
-        "parameters": {
-          "category": "分类，见下表，默认为全部"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "周度市场观察",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "description": "| 家电行业 | 服装行业 | 美妆行业 | 食品饮料行业 |\n| -------- | -------- | -------- | ------------ |",
+        "view": 0,
         "location": "weekly.ts",
         "module": "() => import('@/routes/iresearch/weekly.ts')"
       }
     },
-    "name": "艾瑞",
-    "apiRoutes": {},
-    "url": "www.iresearch.com.cn",
+    "name": "艾瑞咨询",
+    "url": "iresearch.com.cn",
+    "categories": [
+      "other"
+    ],
+    "description": "",
     "lang": "zh-CN"
   },
   "isct": {
