@@ -1,13 +1,13 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 const types = {
     1: {
@@ -212,8 +212,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const type: number = typeObj.value;
     const id: string | undefined = idObj ? String(idObj.value) : undefined;
 
-    const baseUrl: string = 'https://www.iresearch.com.cn';
-    const imageBaseUrl: string = 'https://pic.iresearch.cn';
+    const baseUrl = 'https://www.iresearch.com.cn';
+    const imageBaseUrl = 'https://pic.iresearch.cn';
     const targetUrl: string = new URL(`report.shtml?type=${type}${id ? `&classId=${id}` : ''}`, baseUrl).href;
     const apiUrl: string = new URL(`api/${typeObj.slug}`, baseUrl).href;
     const apiDetailUrl: string = new URL(`api/${typeObj.detailSlug}`, baseUrl).href;
@@ -245,7 +245,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             })();
 
         const images: string[] = [item.BigImg, item.SmallImg, item.reportpic].filter(Boolean) as string[];
-        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string | undefined = renderDescription({
             images: images.map((src) => ({
                 src,
                 alt: title,
@@ -282,8 +282,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
         const medias: Record<string, Record<string, string>> = (() => {
             const result: Record<string, Record<string, string>> = {};
-            const medium: string = 'image';
-            let count: number = 0;
+            const medium = 'image';
+            let count = 0;
 
             for (const media of images) {
                 const url: string | undefined = media;
@@ -293,7 +293,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 count += 1;
-                const key: string = `${medium}${count}`;
+                const key = `${medium}${count}`;
 
                 result[key] = {
                     url,
@@ -349,7 +349,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         (_, index) => `${imageBaseUrl}/${typeObj.imageSlug}/${item.detailId}/${index + 1}.jpg`
                     ),
                 ].filter(Boolean) as string[];
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                const description: string | undefined = renderDescription({
                     images: images.map((src) => ({
                         src,
                         alt: title,
@@ -377,8 +377,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const medias: Record<string, Record<string, string>> = (() => {
                     const result: Record<string, Record<string, string>> = {};
-                    const medium: string = 'image';
-                    let count: number = 0;
+                    const medium = 'image';
+                    let count = 0;
 
                     for (const media of images) {
                         const url: string | undefined = media;
@@ -388,7 +388,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         }
 
                         count += 1;
-                        const key: string = `${medium}${count}`;
+                        const key = `${medium}${count}`;
 
                         result[key] = {
                             url,
